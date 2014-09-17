@@ -68,3 +68,20 @@
 	color: #f7dfbb;
 	margin:0;
 }
+.backend-wpsteam-achievements > li {
+	float:left;
+	width:200px;
+	min-height: 285px;
+	text-align: center;
+	padding:5px;
+	border:1px solid black;
+	margin:5px;
+	position:relative;
+}
+.backend-wpsteam-achievements > li > img {
+	height:64px;
+	width:64px;
+}
+.backend-wpsteam-unlocked {
+	margin:0;
+}
