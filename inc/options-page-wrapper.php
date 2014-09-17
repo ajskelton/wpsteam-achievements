@@ -13,6 +13,7 @@
 				<div class="meta-box-sortables ui-sortable">
 
 					<?php if( !isset( $wpsteamname ) || $wpsteamname == '' ): ?>
+					<pre><code><?php var_dump($wpsteam_profile); ?></code></pre>
 
 					<div class="postbox">
 					
@@ -100,10 +101,10 @@
 
 					<div class="postbox">
 					
-						<h3><span><?php echo $wpsteamname ?></span></h3>
+						<h3><span><?php echo $wpsteam_profile['steamID']; ?></span></h3>
 						<div class="inside">
 							
-							<p><img width="100%" class="steam-gravatar" src="<?php echo $plugin_url . '/images/steam_gravatar.jpg'; ?>" alt="Lunch Meats Gravatar"></p>
+							<p><img width="100%" class="steam-gravatar" src="<?php echo $wpsteam_profile['avatarFull']; ?>" alt="<?php echo $wpsteam_profile['steamID'] . 's Avatar' ?>"></p>
 
 							<ul class="steam-total-achievements">							
 

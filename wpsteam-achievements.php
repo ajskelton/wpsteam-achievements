@@ -64,11 +64,13 @@ function wpsteam_achievements_options_page() {
 
 			$wpsteamname = esc_html( $_POST['wpsteamname'] );
 			
+			$wpsteam_profile = wpsteam_achievements_get_profile($wpsteamname);
 			$wpsteam_tf2_xml = wpsteam_tf2_xml($wpsteamname);
 			$achievement_count = count_achievements($wpsteam_tf2_xml);
 			$achievements = most_recent_achievements($wpsteam_tf2_xml);
 
 			$options['wpsteamname']				    			 = $wpsteamname;
+			$options['wpsteam_profile']                  			 = $wpsteam_profile;
 			$options['achievement_count']                               = $achievement_count;
 			$options['last_updated']							 = time();
 			$options['most_recent_achievement']                     = $achievements;
@@ -85,8 +87,7 @@ function wpsteam_achievements_options_page() {
 
 		$wpsteamname = $options['wpsteamname'];
 		$achievement_count = $options['achievement_count'];
-		// $wpsteamid_profile = $options['wpsteamid_profile'];
-		// $wpsteamid_achievement_count = $options['wpsteamid_achievement_count'];
+		$wpsteam_profile = $options['wpsteam_profile'];
 		$achievements = $options['most_recent_achievement'];
 
 
@@ -96,26 +97,33 @@ function wpsteam_achievements_options_page() {
 
 }
 
-// function wpsteam_achievements_get_profile($wpsteamid) {
-// 	$json_feed_url = 'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=440&key=AC731CA90D4CC29673F79281CF55CE7E&steamid=' . $wpsteamid;
-// 	$json_feed = wp_remote_get( $json_feed_url, $args );
-// 	$wpsteamid_profile = json_decode( $json_feed['body'] );
-// 	return $wpsteamid_profile;
+function wpsteam_achievements_get_profile($wpsteamid) {
+	if(is_numeric($wpsteamid)) {
+		$xml_url = 'http://steamcommunity.com/profiles/' . $wpsteamid . '?xml=1';
+	} else {
+		$xml_url = 'http://steamcommunity.com/id/' . $wpsteamid . '?xml=1';
+	}
+	$val = simplexml_load_file($xml_url);
+	$profile = array();
+	$profile['steamID'] = (string)$val->{'steamID'};
+	$profile['avatarFull'] = (string)$val->{'avatarFull'};
+	return $profile;
+}
 
-// }
-
-function wpsteam_steamprofile_xml($wpsteamid) {
-	$xml_url = 'http://steamcommunity.com/profiles/' . $wpsteamid . '/?xml=1';
-	$xml_feed = simplexml_load_file($xml_url);
+function wpsteam_achievements_get_name($wpsteam_profile) {
+	$name = $val->{'steamID'};
+	echo $name;
+	return $name;
 }
 
 function wpsteam_tf2_xml($wpsteamname) {
 	// $url = 'http://steamcommunity.com/id/' . $wpsteamname . '/stats/TF2?tab=achievements&xml=1';
-	$url = 'http://steamcommunity.com/profiles/' . $wpsteamname . '/stats/TF2?xml=1';
-		// http://steamcommunity.com/profiles/76561197995552053/stats/TF2
-		// echo $url;
+	if(is_numeric($wpsteamname)) {
+		$url = 'http://steamcommunity.com/profiles/' . $wpsteamname . '/stats/TF2?xml=1';
+	} else {
+		$url = 'http://steamcommunity.com/id/' . $wpsteamname . '/stats/TF2?tab=achievements&xml=1';
+	} 
 	$val = simplexml_load_file($url);
-	// var_dump($val);
 	return $val;
 }
 function getTimestamp() {
@@ -136,7 +144,6 @@ function count_achievements($wpsteam_tf2_xml) {
 }
 function most_recent_achievements($wpsteam_tf2_xml) {
 	$obj_achievement = array();
-	// var_dump($wpsteam_tf2_xml);
 	$i = 1;
 
 	foreach($wpsteam_tf2_xml->{'achievements'}->{'achievement'} as $item) {
