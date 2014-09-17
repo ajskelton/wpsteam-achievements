@@ -135,27 +135,31 @@ function sort_array_timestamps($a, $b) {
 }
 function count_achievements($wpsteam_tf2_xml) {
 	$i = 0;
-	foreach($wpsteam_tf2_xml->{'achievements'}->{'achievement'} as $item) {
-		if($item[0]["closed"] == 1) {
-			$i++;
+	if($wpsteam_tf2_xml->{'achievements'}->{'achievement'} != null) {
+		foreach($wpsteam_tf2_xml->{'achievements'}->{'achievement'} as $item) {
+			if($item[0]["closed"] == 1) {
+				$i++;
+			}
 		}
 	}
+	
 	return $i;
 }
 function most_recent_achievements($wpsteam_tf2_xml) {
 	$obj_achievement = array();
 	$i = 1;
-
-	foreach($wpsteam_tf2_xml->{'achievements'}->{'achievement'} as $item) {
-		if($item[0]["closed"] == 1) {
-			foreach($item as $key => $value) {
-				$achievement[(string)$key] = (string)$value;
+	if($wpsteam_tf2_xml->{'achievements'}->{'achievement'} != null) {
+		foreach($wpsteam_tf2_xml->{'achievements'}->{'achievement'} as $item) {
+			if($item[0]["closed"] == 1) {
+				foreach($item as $key => $value) {
+					$achievement[(string)$key] = (string)$value;
+				}
+				$obj_achievement[] = $achievement;
 			}
-			$obj_achievement[] = $achievement;
 		}
+		usort($obj_achievement, "sort_array_timestamps");
+		return $obj_achievement;
 	}
-	usort($obj_achievement, "sort_array_timestamps");
-	return $obj_achievement;
 }
 
 /*	

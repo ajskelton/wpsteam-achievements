@@ -13,7 +13,6 @@
 				<div class="meta-box-sortables ui-sortable">
 
 					<?php if( !isset( $wpsteamname ) || $wpsteamname == '' ): ?>
-					<pre><code><?php var_dump($wpsteam_profile); ?></code></pre>
 
 					<div class="postbox">
 					
@@ -32,15 +31,18 @@
 									<td>
 										<input name="wpsteamname" id="wpsteamname" type="text" value="" class="regular-text" />
 									</td>
+								</tr>
+								<tr>
+									<td colspan='2'>
+										<label for="wpsteamname">Enter your unique URL you selected for your steam account, or your 64bit Steam ID.<br />Example: Lunch_Meat or 76561197963973896</label>
+									</td>
+								</tr>
+								<tr>
 									<td>
-										<label for="wpsteamname">Enter your unique URL you selected for your steam account.</label>
+										<input class="button-primary" type="submit" name="steamname_submit" value="Save" /> 
 									</td>
 								</tr>								
 							</table>
-
-							<p>
-								<input class="button-primary" type="submit" name="steamname_submit" value="Save" /> 
-							</p>
 
 							</form>
 
