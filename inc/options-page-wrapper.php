@@ -63,28 +63,35 @@
 							<p>
 								You have completed <?php echo $achievement_count; ?> Team Fortress 2 Achievements.
 							</p>
-							<ul class="backend-wpsteam-achievements">
+							<table class="backend-wpsteam-achievements">
+								<tr>
+									<th>Icon</th>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Unlock Date</th>
+								</tr>
 
 							<?php 
 								foreach($achievements as $achievement) {
 							?>
-								<li>
-									<img src="<?php echo $achievement['iconClosed']?>" alt="<?php echo $achievement['name']?>">
-									<h3><?php echo $achievement['name']; ?></h3>
-									<p><?php echo $achievement['description']; ?></p>
-									<p class="backend-wpsteam-unlocked">Unlocked<br><?php echo date( 'F jS, Y',$achievement['unlockTimestamp']); ?></p>
-								</li>
-								<div class="wpsteam-achievement-info">
-									<p class="wpsteam-achievement-name">
-										<?php echo $achievements[$i]['name'] ?>
-									</p>
-									<p class="wpsteam-achievement-description">
-										<?php echo $achievements[$i]['description'] ?>
-									</p>
-								</div>
+								<tr>
+									<td>
+										<img src="<?php echo $achievement['iconClosed']?>" alt="<?php echo $achievement['name']?>">
+									</td>
+									<td>										
+										<h3><?php echo $achievement['name']; ?></h3>
+									</td>
+									<td>
+										<p><?php echo $achievement['description']; ?></p>
+									</td>
+									<td>
+										<p class="backend-wpsteam-unlocked"><?php echo date( 'F jS, Y',$achievement['unlockTimestamp']); ?></p>
+									</td>
+								</tr>
+								
 								
 							<?php } ?>
-							</ul> <!-- end .steam-achievements -->
+							</table> <!-- end .steam-achievements -->
 						</div> <!-- end .inside clearfix -->
 					</div> <!-- end .postbox -->
 
