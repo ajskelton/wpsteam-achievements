@@ -63,12 +63,9 @@ function wpsteam_achievements_options_page() {
 		if( $hidden_field == 'Y' ) {
 
 			$wpsteamname = esc_html( $_POST['wpsteamname'] );
-			// $wpsteamid_profile = wpsteam_achievements_get_profile($wpsteamid);
-			// $steamprofile = wpsteam_steamprofile_xml($wpsteamid);
 			
 			$wpsteam_tf2_xml = wpsteam_tf2_xml($wpsteamname);
 			$achievement_count = count_achievements($wpsteam_tf2_xml);
-			echo $achievement_count;
 			$achievements = most_recent_achievements($wpsteam_tf2_xml);
 
 			$options['wpsteamname']				    			 = $wpsteamname;
@@ -113,7 +110,10 @@ function wpsteam_steamprofile_xml($wpsteamid) {
 }
 
 function wpsteam_tf2_xml($wpsteamname) {
-	$url = 'http://steamcommunity.com/id/' . $wpsteamname . '/stats/TF2?tab=achievements&xml=1';
+	// $url = 'http://steamcommunity.com/id/' . $wpsteamname . '/stats/TF2?tab=achievements&xml=1';
+	$url = 'http://steamcommunity.com/profiles/' . $wpsteamname . '/stats/TF2?xml=1';
+		// http://steamcommunity.com/profiles/76561197995552053/stats/TF2
+		// echo $url;
 	$val = simplexml_load_file($url);
 	// var_dump($val);
 	return $val;
@@ -126,36 +126,27 @@ function sort_array_timestamps($a, $b) {
 	return($b['unlockTimestamp'] - $a['unlockTimestamp']);
 }
 function count_achievements($wpsteam_tf2_xml) {
-	// $i = 0;
-	// var_dump($wpsteam_tf2_xml->{'achievements'}->{'achievement'}[0]);
-	// echo gettype($wpsteam_tf2_xml->{'achievements'}->{'achievement'}[0]->{'@attributes'});
-	// foreach($wpsteam_tf2_xml->{'achievements'}->{'achievement'} as $item) {
-	// 	foreach($item->{'@attributes'} as $key => $value) {
-	// 		$coutner[(string)$key] = (string)$value;
-	// 		echo 'do it';
-	// 	}
-	// 	var_dump($counter);
-		
-
-	
-	// echo $i;
-	// return $i;
+	$i = 0;
+	foreach($wpsteam_tf2_xml->{'achievements'}->{'achievement'} as $item) {
+		if($item[0]["closed"] == 1) {
+			$i++;
+		}
+	}
+	return $i;
 }
 function most_recent_achievements($wpsteam_tf2_xml) {
 	$obj_achievement = array();
+	// var_dump($wpsteam_tf2_xml);
+	$i = 1;
 
 	foreach($wpsteam_tf2_xml->{'achievements'}->{'achievement'} as $item) {
-		
-
-		foreach($item as $key => $value) {
-			$achievement[(string)$key] = (string)$value;
-		}
-		?><?php
-		if($achievement['unlockTimestamp'] != 1403824393 && $achievement['unlockTimestamp'] != null ) {
+		if($item[0]["closed"] == 1) {
+			foreach($item as $key => $value) {
+				$achievement[(string)$key] = (string)$value;
+			}
 			$obj_achievement[] = $achievement;
 		}
 	}
-
 	usort($obj_achievement, "sort_array_timestamps");
 	return $obj_achievement;
 }

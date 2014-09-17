@@ -58,17 +58,27 @@
 
 							<!-- This uses the GetPlayerAchievements API -->
 							<p>
-								You have completed # Team Fortress 2 Achievements.
+								You have completed <?php echo $achievement_count; ?> Team Fortress 2 Achievements.
 							</p>
-							<ul class="steam-achievements">
+							<ul class="backend-wpsteam-achievements">
 
 							<?php 
 								foreach($achievements as $achievement) {
 							?>
 								<li>
 									<img src="<?php echo $achievement['iconClosed']?>" alt="<?php echo $achievement['name']?>">
-									<p><?php echo $achievement['name'] ?></p>
+									<h3><?php echo $achievement['name']; ?></h3>
+									<p><?php echo $achievement['description']; ?></p>
+									<p class="backend-wpsteam-unlocked">Unlocked<br><?php echo date( 'F jS, Y',$achievement['unlockTimestamp']); ?></p>
 								</li>
+								<div class="wpsteam-achievement-info">
+									<p class="wpsteam-achievement-name">
+										<?php echo $achievements[$i]['name'] ?>
+									</p>
+									<p class="wpsteam-achievement-description">
+										<?php echo $achievements[$i]['description'] ?>
+									</p>
+								</div>
 								
 							<?php } ?>
 							</ul> <!-- end .steam-achievements -->
@@ -97,7 +107,7 @@
 
 							<ul class="steam-total-achievements">							
 
-									<li>Achievements: <strong>#</strong></li>
+									<li>Achievements: <strong><?php echo $achievement_count; ?></strong></li>
 									<li>Percentage Bar</li>
 
 							</ul>
