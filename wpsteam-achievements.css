@@ -1,0 +1,70 @@
+.inside {
+	display: table
+}
+.steam-achievements > li {
+	float: left; 
+	position:relative;
+	text-align: center; 
+}           
+.steam-one-wide {
+	width: 100%;
+}
+.steam-two-wide {
+	width: 50%;
+}
+.steam-three-wide {
+	width: 33.33%;
+}
+.steam-four-wide {
+	width: 25%;
+}
+.steam-five-wide {
+	width: 20%;
+}
+.steam-achievements p {}
+.steam-achievements li li {
+	margin: 2px 0; 
+	min-height: auto
+}
+.steam-achievements img {
+	float: left; 
+	margin-bottom: 5px;
+	height:64px;
+	width:64px;
+}
+
+.wpsteam-achievement-info {
+	display: none;
+	background: #3e3e3e;
+	color: #f37626;
+	border-radius: 4px;	
+	color: #ededed;
+	padding: 5px;
+	width: 250px;	
+	position: absolute;
+	z-index: 100;
+	left: -130%;
+	bottom: 110%;
+	transition: bottom ease-out .5s;
+	-webkit-transition: bottom ease-out .5s; 
+}
+.wpsteam-achievement-info:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-top: 8px solid #3E3E3E;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+.wpsteam-achievement-info p.wpsteam-achievement-name {
+	color:#f37626;
+	font-size:1.3em;
+	margin:0;
+}
+.wpsteam-achievement-info p.wpsteam-achievement-description {
+	color: #f7dfbb;
+	margin:0;
+}
