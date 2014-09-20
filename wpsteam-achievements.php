@@ -104,12 +104,6 @@ function wpsteam_achievements_get_profile($wpsteamid) {
 	return $profile;
 }
 
-function wpsteam_achievements_get_name($wpsteam_profile) {
-	$name = $val->{'steamID'};
-	echo $name;
-	return $name;
-}
-
 function wpsteam_tf2_xml($wpsteamname) {
 	if(is_numeric($wpsteamname)) {
 		$url = 'http://steamcommunity.com/profiles/' . $wpsteamname . '/stats/TF2?xml=1';
