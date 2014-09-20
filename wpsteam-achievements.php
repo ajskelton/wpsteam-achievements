@@ -19,12 +19,6 @@
 $plugin_url = WP_PLUGIN_URL . '/wpsteam-achievements';
 $options = array();
 
-/*
- *	Add a link to our plugin in the admin menu
- *	under 'Settings > Treehouse Badges'
- *
-*/
-
 function wpsteam_achievements_menu() {
 
 	/*
@@ -117,7 +111,6 @@ function wpsteam_achievements_get_name($wpsteam_profile) {
 }
 
 function wpsteam_tf2_xml($wpsteamname) {
-	// $url = 'http://steamcommunity.com/id/' . $wpsteamname . '/stats/TF2?tab=achievements&xml=1';
 	if(is_numeric($wpsteamname)) {
 		$url = 'http://steamcommunity.com/profiles/' . $wpsteamname . '/stats/TF2?xml=1';
 	} else {
@@ -125,9 +118,6 @@ function wpsteam_tf2_xml($wpsteamname) {
 	} 
 	$val = simplexml_load_file($url);
 	return $val;
-}
-function getTimestamp() {
-	return $this->unlockTimestamp;
 }
 
 function sort_array_timestamps($a, $b) {
